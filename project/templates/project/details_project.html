@@ -1,0 +1,53 @@
+{% extends 'project/main.html' %}
+
+{% block title %}Проекты{% endblock %}
+
+{% block tab %}
+	<div class="tab">
+		<a href="{% url 'project' %}" class="tabs-btn active"  type="button" id="a-project">Проекты</a>
+		<a href="{% url 'task_list' pk=project.id %}" class="tabs-btn" type="button" id="a-task">Задачи</a>
+	</div>
+{% endblock %} 
+
+{% block content %}
+	<div class="details">
+		<div class="details-header">
+			<h1 class="create-title">{{ project.title_project }}</h1>
+			<h1 class="create-title">{{ project.author_project.username }}</h1>
+		</div>
+		<p class="details-tz">Техническое задание: </p> <pre class="details-tz-text">{{ project.specification_project }}</pre><br/>
+		<div class="details-header">
+			<p class="details_date">Создано: {{ project.date_project }}</p>
+			<p class="details_date">Дедлайн: {{ project.deadline_project }}</p>
+		</div>
+	</div>
+
+
+	<div class="hr active" id="create">
+		<hr>
+		<div class="create">
+			<form class="form-create" action="" method="post">
+				{% csrf_token %}
+				<h1 class="create-title">Новая задача</h1><br>
+				<div class="create-header">
+					{{ taskForm.title_task }}
+					{{ taskForm.performer_task }}<br/>
+				</div>
+				{{ taskForm.task }}<br/>
+				<span>{{ error }}</span>
+				<div class="create-header">
+					{{ taskForm.deadline_task }}<br/>
+					<div class="btndiv">
+						<button  class="form-btn create-btn" name="project-btn">Сохранить</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+{% endblock %}
+
+{% block footertab %}
+	<div class="tab">
+		<a href="#" onclick="details_project()" class="tabs-btn"  type="button" id="details-project">Новая задача</a>
+	</div>
+{% endblock %}

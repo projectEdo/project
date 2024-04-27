@@ -1,0 +1,37 @@
+{% extends 'project/main.html' %}
+
+{% block title %}Проекты{% endblock %}
+
+{% block tab %}
+	<div class="tab">
+		<a href="{% url 'project' %}" onclick="project_color()" class="tabs-btn"  type="button" id="a-project">Проекты</a>
+		<a href="{% url 'task' %}" onclick="task_color()" class="tabs-btn" type="button" id="a-task">Задачи</a>
+	</div>
+{% endblock %} 
+
+{% block content %}
+	<div class="create">
+		<form class="form-create" action="" method="post">
+			{% csrf_token %}
+			<h1 class="create-title">Новая задача</h1><br>
+			<div class="create-header">
+				{{ taskForm.title_task }}
+				{{ taskForm.performer_task }}<br/>
+			</div>
+			{{ taskForm.task }}<br/>
+			<div class="create-header">
+				{{ taskForm.deadline_task }}<br/>
+				<span>{{ error }}</span>
+				<div class="btndiv">
+					<button  class="form-btn create-btn" name="datails-project-btn">Сохранить</button>
+				</div>
+			</div>
+		</form>
+	</div>
+{% endblock %}
+
+{% block footertab %}
+	<div class="tab">
+		<a href="{% url 'project' %}" onclick="project_color()" class="tabs-btn active"  type="button" id="a-project">Создать</a>
+	</div>
+{% endblock %}

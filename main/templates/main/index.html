@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+	<script src="{% static 'main/js/script.js' %}"></script>
+	<title>{{ user.groups.first.name }}: {{ user.first_name }}</title>
+</head>
+<body>
+	<div class="program-manager">
+		<div class="container">
+			<div class="content">
+				<div class="sign">
+					<form action="" method="post" class="sign-form">
+						{% csrf_token %}
+						<h1 class="regist_title">Регистрация</h1>
+						{{ form.first_name }}<br>
+						{{ form.username }}<br>
+						{{ form.password }}<br>
+						{{ form.password_two }}<br>
+						<p>Должность:  {{ form.group }}</p><br>
+						<span>{{ sign_result }}</span><br>
+						<button class="form-btn" type="submit" name="sign-up">Зарегистрировать</button>
+					</form>
+				</div>
+
+				<div class="projects">
+          <div class="tabs">
+            <div class="tab">
+              <button class="tabs-btn active" type="button" id="projects-btn" onclick="projectsFunc()">Проекты</button>
+              <button class="tabs-btn" type="button" id="task-btn" onclick="taskFunc()">Задачи</button>
+              <button class="tabs-btn" type="button" id="persons-btn" onclick="personsFunc()">Сотрудники</button>
+            </div>
+
+						<div class="logout main">
+							<a href="{% url 'logout' %}">Выйти</a>
+						</div>
+
+						<div class="info-projects" id="projects">
+							<div class="projects-info">
+								<div class="items-projects">
+									{% for item in project %}
+										<form class="item-project" action="" method="post">
+												<p class="item-value"><strong>Проект: </strong><br/>{{ item.title_project }}</p>
+												<p class="item-value"><strong>Создал: </strong><br/>{{ item.author_project.first_name }}</p>
+												<p class="item-value"><strong>Дата создания: </strong><br/>{{ item.date_project }}</p>
+												<p class="item-value"><strong>Дедлайн: </strong><br/>{{ item.deadline_project }}</p>
+											<a href="{% url 'details_project' pk=item.id %}" class="form-btn" name="datails-project-btn">Подробнее</a>
+										</form>
+									{% endfor %}
+								</div>
+							</div>
+						</div>	
+
+						<div class="task active" id="task">
+							<div class="projects-info">
+								<div class="items-projects">
+									{% for item in task %}
+										<form class="item-project" action="" method="post">
+											<p class="item-value"><strong>Задача: </strong><br/>{{ item.title_task }}</p>
+											<p class="item-value"><strong>Создал: </strong><br/>{{ item.author_task.first_name }}</p>
+											<p class="item-value"><strong>Дата создания: </strong><br/>{{ item.date_task }}</p>
+											<p class="item-value"><strong>Дедлайн: </strong><br/>{{ item.deadline_task }}</p>
+											<a href="{% url 'details_task' pk=item.id %}" type="button" class="form-btn" name="datails-task-btn">Подробнее</a>
+										</form>
+									{% endfor %}
+								</div>
+							</div>
+						</div>
+
+						<div class="persons active" id="persons">
+							<div class="projects-info">
+								<div class="items-projects">
+									{% for item in User %}
+										<form class="item-project" action="" method="post">
+											<p class="item-value"><strong>Логин: </strong><br/>{{ item.username }}</p>
+											<p class="item-value"><strong>Имя: </strong><br/>{{ item.first_name }}</p>
+											<p class="item-value"><strong>Должность: </strong><br/>{{ item.groups.first.name }}</p>
+											<p class="item-value"><strong>Дата создания: </strong><br/>{{ item.date_joined }}</p>
+										</form>
+									{% endfor %}
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

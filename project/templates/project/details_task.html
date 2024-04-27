@@ -1,0 +1,47 @@
+{% extends 'project/main.html' %}
+
+{% block title %}Проекты{% endblock %}
+
+{% block tab %}
+	<div class="tab">
+		<a href="{% url 'project' %}" class="tabs-btn"  type="button" id="a-project">Проекты</a>
+		<a href="{% url 'task_list' pk=project.id %}" class="tabs-btn active" type="button" id="a-task">Задачи</a>
+	</div>
+{% endblock %} 
+
+{% block content %}
+	<div class="details">
+		<div class="last-btn detal">
+			<a href="{% url 'task_list' pk=project.id %}" type="button" class="form-btn" name="datails-project-btn">Назад</a>
+		</div>
+		<div class="details-header">
+			<h1 class="create-title">{{ task.title_task }}</h1>
+			<h1 class="create-title">{{ task.author_task.username }}</h1>
+		</div>
+		<p class="details-tz">Задача: </p> <pre class="details-tz-text">{{ task.task }}</pre>
+		<span>{{ task.file_task }}</span><br/>
+		<div class="details-header">
+			<p class="details_date">Создано: {{ task.date_task }}</p>
+			<p class="details_date">Дедлайн: {{ task.deadline_task }}</p>
+		</div>
+		<p class="details-status">{{ task.status_task }}</p>
+	</div>
+
+	<div class="hr active" id="add-file">
+		<hr>
+		<form class="add-file" action="" method="POST">
+			<div>{{ taskForm.file_task }}</div><br/>
+			<div class="btndiv">
+				<button class="form-btn create-btn" name="datails-project-btn">Отправить</button>
+			</div>
+		</form>
+	</div>
+{% endblock %}
+
+{% block footertab %}
+	{% if task.performer_task == user %}
+		<div class="tab">
+			<a href="#" onclick="details_task()" class="tabs-btn" type="button" id="details-task">Документ</a>
+		</div>
+	{% endif %}
+{% endblock %}

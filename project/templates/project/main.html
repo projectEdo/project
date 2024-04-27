@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'main/css/main.css' %}" />
+    <title>{{ user.groups.first.name }} : {{ user.first_name }}</title>
+    <script src="{% static 'main/js/script.js' %}"></script>
+  </head>
+  <body>
+    <div class="header">
+      <div class="container">
+        <div class="projects">
+
+          {% block tab %}
+            
+          {% endblock %}
+
+            {% if user.groups.first.name == 'Project Manager' %}
+              <div class="admin">
+                  <a href="{% url 'main' %}">Админ</a>
+              </div>
+            {% endif %}
+
+          <div class="logout">
+            <a href="{% url 'logout' %}">Выйти</a>
+          </div>
+
+          
+          <div class="projects-info">
+            {% block content %}
+
+            {% endblock %}
+          </div>
+
+          {% block footertab %}
+          
+          {% endblock %}
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,54 @@
+{% extends 'project/main.html' %}
+
+{% block title %}Проекты{% endblock %}
+
+{% block tab %}
+	<div class="tab">
+		<a href="{% url 'project' %}" onclick="project_color()" class="tabs-btn active"  type="button" id="a-project">Проекты</a>
+	</div>
+
+	
+{% endblock %} 
+
+
+{% block content %}
+	<div class="items-projects">
+		{% for item in project %}
+			<form class="item-project" action="" method="post">
+				<p class="item-value"><strong>Проект: </strong><br/>{{ item.title_project }}</p>
+				<p class="item-value"><strong>Создал: </strong><br/>{{ item.author_project.first_name }}</p>
+				<p class="item-value"><strong>Дата создания: </strong><br/>{{ item.date_project }}</p>
+				<p class="item-value"><strong>Дедлайн: </strong><br/>{{ item.deadline_project }}</p>
+				<a href="{% url 'details_project' pk=item.id %}" type="button" class="form-btn" name="datails-project-btn">Подробнее</a>
+			</form>
+		{% endfor %}
+	</div>
+
+	<div class="hr active" id="create">
+		<hr>
+		<div class="create">
+			<form class="form-create" action="" method="post">
+				{% csrf_token %}
+				<h1 class="create-title">Новый проект</h1><br>
+				<div class="create-header">
+					{{ projectForm.title_project }}
+					{{ projectForm.performer_project }}<br/>
+				</div>
+				{{ projectForm.specification_project }}<br/>
+				<span>{{ error }}</span>
+				<div class="create-header">
+					{{ projectForm.deadline_project }}<br/>
+					<div class="btndiv">
+						<button  class="form-btn create-btn" name="project-btn">Сохранить</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+{% endblock %}
+
+{% block footertab %}
+<div class="tab">
+	<a href="#" onclick="details_project()" class="tabs-btn"  type="button" id="details-project">Новый проект</a>
+</div>
+{% endblock %}

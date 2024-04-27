@@ -1,0 +1,28 @@
+{% extends 'project/main.html' %}
+
+{% block title %}Задачи{% endblock %}
+
+{% block tab %}
+	<div class="tab">
+		<a href="{% url 'project' %}" class="tabs-btn"  type="button" id="a-project">Проекты</a>
+		<a href="{% url 'details_project' pk=project.id %}" class="tabs-btn active" type="button" id="a-task">Задачи</a>
+	</div>
+{% endblock %} 
+
+{% block content %}
+	<div class="items-projects">
+		<div class="last-btn">
+			<a href="{% url 'details_project' pk=project.id %}" type="button" class="form-btn" name="datails-project-btn">Назад</a>
+		</div>
+		{% for item in task %}
+			<form class="item-project" action="" method="post">
+				<p class="item-value"><strong>Задача: </strong><br/>{{ item.title_task }}</p>
+				<p class="item-value"><strong>Создал: </strong><br/>{{ item.author_task.first_name }}</p>
+				<p class="item-value"><strong>Дата создания: </strong><br/>{{ item.date_task }}</p>
+				<p class="item-value"><strong>Дедлайн: </strong><br/>{{ item.deadline_task }}</p>
+				<a href="{% url 'details_task' pk=item.id %}" type="button" class="form-btn" name="datails-task-btn">Подробнее</a>
+			</form>
+		{% endfor %}
+	</div>
+{% endblock %}
+
